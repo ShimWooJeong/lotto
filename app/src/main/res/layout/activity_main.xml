@@ -98,10 +98,11 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/imageView"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                app:srcCompat="@drawable/constellation" />
+                app:srcCompat="@drawable/constellation"
+                tools:ignore="DuplicateIds" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -145,10 +146,11 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/imageView3"
+                android:id="@+id/imageView"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
-                app:srcCompat="@drawable/name" />
+                app:srcCompat="@drawable/name"
+                tools:ignore="DuplicateIds" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
