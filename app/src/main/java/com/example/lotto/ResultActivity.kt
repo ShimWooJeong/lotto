@@ -16,12 +16,17 @@ class ResultActivity : AppCompatActivity() {
         val result = intent.getIntegerArrayListExtra("result")?:return
         val sConstellation = intent.getStringExtra("constellation")
 
+        val year = intent.getStringExtra("year")
+        val month = intent.getStringExtra("month")
+        val dayOfMonth = intent.getStringExtra("dayOfMonth")
+
+
         val result_sorted = result?.sorted()
         //val result_sorted = result?.let {result.sortedBy { it }}
 
         sConstellation?.let {
             val resultLabel = findViewById<TextView>(R.id.resultLabel)
-            resultLabel.text = "${sConstellation}의 ${SimpleDateFormat("yyyy년 MM월 dd일").format(Date())} 로또 번호입니다 "
+            resultLabel.text = "${sConstellation}의 " +year+"년"+ month+"월"+ dayOfMonth+"일 로또 번호입니다 "
         }
 /*
         result?.let {

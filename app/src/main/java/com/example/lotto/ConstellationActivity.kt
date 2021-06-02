@@ -1,29 +1,17 @@
 package com.example.lotto
 
 import android.content.Intent
+import android.icu.number.IntegerWidth
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.DatePicker
 import android.widget.TextView
-import java.sql.Date
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class ConstellationActivity : AppCompatActivity() {
-
-    fun getShuffledLottoNumbersFromHash (str : String) : MutableList<Int> {
-        val list = mutableListOf<Int>()
-
-        for (number in 1..45) {
-            list.add(number)
-        }
-        val targetString = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SS", Locale.KOREA).format(Date()) + str
-        list.shuffle(Random(targetString.hashCode().toLong()))
-        return list.subList(0, 6)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -36,11 +24,17 @@ class ConstellationActivity : AppCompatActivity() {
         txtConstell.text = makeConstellationString(datePicker.month, datePicker.dayOfMonth)
 
 
+
         val btnGoResultConstell = findViewById<Button>(R.id.btnGoResultConstell)
         btnGoResultConstell.setOnClickListener {
             val intent = Intent(this, ResultActivity::class.java)
             intent.putIntegerArrayListExtra("result", ArrayList(getShuffledLottoNumbersFromHash(txtConstell.text.toString())))
             intent.putExtra("constellation", makeConstellationString(datePicker.month, datePicker.dayOfMonth))
+
+            intent.putExtra("year", Integer.toString(datePicker.year));
+            intent.putExtra("month", Integer.toString(datePicker.month +1));
+            intent.putExtra("dayOfMonth", Integer.toString(datePicker.dayOfMonth));
+
             startActivity(intent)
         }
 
@@ -57,6 +51,20 @@ class ConstellationActivity : AppCompatActivity() {
                     }
 
                 })
+    }
+
+    fun getShuffledLottoNumbersFromHash (str: String) : MutableList<Int> {
+        val list = mutableListOf<Int>()
+        val datePicker = findViewById<DatePicker>(R.id.datePicker)
+
+        for (number in 1..45) {
+            list.add(number)
+        }
+        //val targetString = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(Date()) + str
+        //val targetString = String.format("yyyy-MM-dd", Integer.toString(datePicker.year), Integer.toString(datePicker.month)+1, Integer.toString(datePicker.dayOfMonth)) + str
+        val targetString = "${Integer.toString(datePicker.year)}${Integer.toString(datePicker.month)+1}${Integer.toString(datePicker.dayOfMonth)}"
+        list.shuffle(Random(targetString.hashCode().toLong()))
+        return list.subList(0, 6)
     }
 
 
