@@ -3,6 +3,10 @@ package com.example.lotto
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.SimpleAdapter
+import android.widget.TextView
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -10,10 +14,20 @@ class ResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_result)
 
         val result = intent.getIntegerArrayListExtra("result")?:return
+        val sConstellation = intent.getStringExtra("constellation")
 
+        val result_sorted = result?.sorted()
+        //val result_sorted = result?.let {result.sortedBy { it }}
 
-        val result_sorted = result?.let {result.sortedBy { it }}
-
+        sConstellation?.let {
+            val resultLabel = findViewById<TextView>(R.id.resultLabel)
+            resultLabel.text = "${sConstellation}의 ${SimpleDateFormat("yyyy년 MM월 dd일").format(Date())} 로또 번호입니다 "
+        }
+/*
+        result?.let {
+            updateLottoBallImages(result.sortedBy{it})
+        }
+*/
         val imageView1 = findViewById<ImageView>(R.id.imageView1)
         val imageView2 = findViewById<ImageView>(R.id.imageView2)
         val imageView3 = findViewById<ImageView>(R.id.imageView3)
@@ -22,8 +36,8 @@ class ResultActivity : AppCompatActivity() {
         val imageView6 = findViewById<ImageView>(R.id.imageView6)
 
         val lottoBallImgeStartId = R.drawable.ball_01
-        //val lottoBallImgeId2 = R.drawable.ball_02
-        //val lottoBallImgeId3 = R.drawable.ball_03
+        val lottoBallImgeId2 = R.drawable.ball_02
+        val lottoBallImgeId3 = R.drawable.ball_03
 
         imageView1.setImageResource(lottoBallImgeStartId + (result_sorted[0] - 1))
         imageView2.setImageResource(lottoBallImgeStartId + (result_sorted[1] - 1))
