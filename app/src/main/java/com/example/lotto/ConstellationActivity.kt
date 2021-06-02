@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CalendarView
 import android.widget.DatePicker
 import android.widget.TextView
 import java.sql.Date
@@ -19,7 +20,7 @@ class ConstellationActivity : AppCompatActivity() {
         for (number in 1..45) {
             list.add(number)
         }
-        val targetString = SimpleDateFormat("yyyy-MM-dd-HH-ss-SS", Locale.KOREA).format(Date()) + str
+        val targetString = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SS", Locale.KOREA).format(Date()) + str
         list.shuffle(Random(targetString.hashCode().toLong()))
         return list.subList(0, 6)
     }
@@ -42,6 +43,20 @@ class ConstellationActivity : AppCompatActivity() {
             intent.putExtra("constellation", makeConstellationString(datePicker.month, datePicker.dayOfMonth))
             startActivity(intent)
         }
+
+        val calendar = Calendar.getInstance()
+
+        datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+                object : CalendarView.OnDateChangeListener, DatePicker.OnDateChangedListener {
+                    override fun onSelectedDayChange(view: CalendarView, year: Int, month: Int, dayOfMonth: Int) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onDateChanged(view: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
+                        txtConstell.text = makeConstellationString(datePicker.month, datePicker.dayOfMonth)
+                    }
+
+                })
     }
 
 
